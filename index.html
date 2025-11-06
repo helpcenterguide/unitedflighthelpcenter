@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AmericanFlyHelp — Premium</title>
+  <meta name="description"
+    content="Premium flight booking experience — elegant design, refined typography, and polished interactions." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "brand-navy": "#0b2035",
+            "brand-gold": "#d4af37",
+            "muted": "#6b7280"
+          },
+          fontFamily: {
+            serif: ["Playfair Display", "Georgia", "serif"],
+            inter: ["Inter", "system-ui", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background-color: #fbfbfc;
+    }
+
+    .glass {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4));
+      backdrop-filter: blur(8px);
+    }
+
+    @media (prefers-color-scheme:dark) {
+      body {
+        background-color: #071422;
+      }
+
+      .glass {
+        background: linear-gradient(90deg, rgba(8, 10, 15, 0.6), rgba(8, 10, 15, 0.45));
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all .7s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .float-slow {
+      transform-origin: center;
+      animation: float 12s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-6px)
+      }
+
+      100% {
+        transform: translateY(0)
+      }
+    }
+
+    .focus-ring:focus {
+      outline: 3px solid rgba(212, 175, 55, 0.2);
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+
+<body class="text-brand-navy dark:text-slate-100">
+
+  <!-- Topbar -->
+  <div class="w-full bg-gradient-to-r from-brand-navy/80 to-sky-700/80 text-white text-sm backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
+      <div class="flex items-center gap-4 text-xs opacity-95">
+        <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/10">No booking fees</span>
+        <span>•</span>
+        <span>24/7 dedicated support</span>
+      </div>
+      <a href="#book" class="text-gold-400 hover:underline underline-offset-2 font-medium">Reserve now</a>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <header
+    class="sticky top-0 z-40 backdrop-blur-md bg-white/40 dark:bg-slate-900/40 border-b border-slate-200/40 dark:border-slate-800/40">
+    <nav class="max-w-7xl mx-auto px-6">
+      <div class="flex items-center justify-between h-20">
+        <a href="#" class="flex items-center gap-3 no-underline">
+          <div
+            class="h-10 w-10 rounded-xl bg-gradient-to-br from-sky-600 to-indigo-700 text-white flex items-center justify-center font-bold">
+            A</div>
+          <div>
+            <div class="text-sm font-semibold text-brand-navy dark:text-slate-100">AmericanFlyHelp</div>
+            <div class="text-xs text-muted">Premium</div>
+          </div>
+        </a>
+
+        <!-- Desktop Menu -->
+        <div class="hidden lg:flex items-center gap-8 text-sm font-medium">
+          <a href="#deals" class="hover:text-sky-600 transition">Deals</a>
+          <a href="#benefits" class="hover:text-sky-600 transition">Why Us</a>
+          <a href="#faqs" class="hover:text-sky-600 transition">Help</a>
+          <a href="#contact" class="hover:text-sky-600 transition">Contact</a>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-3">
+          <a href="#book"
+            class="px-4 py-2 rounded-lg border border-brand-navy text-brand-white hover:bg-brand-navy/10 transition">Manage</a>
+          <a href="#book"
+            class="px-5 py-2 rounded-lg bg-gradient-to-r from-brand-navy to-sky-600 text-white shadow-lg hover:opacity-95 transition">Book
+            a flight</a>
+        </div>
+
+        <!-- Mobile Toggle -->
+        <button id="mobileToggle" class="lg:hidden p-2 rounded-md focus-ring bg-white/60 dark:bg-slate-800/60">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-navy dark:text-slate-100" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu"
+        class="lg:hidden hidden py-4 border-t border-slate-200/60 dark:border-slate-800/60 space-y-2">
+        <a href="#deals" class="block py-2">Deals</a>
+        <a href="#benefits" class="block py-2">Why Us</a>
+        <a href="#faqs" class="block py-2">Help</a>
+        <a href="#contact" class="block py-2">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6">
+
+    <!-- HERO -->
+    <section class="relative bg-white dark:bg-slate-900 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center py-24 lg:py-32">
+
+          <!-- Left Text Column -->
+          <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+            <p class="inline-flex items-center gap-3 text-xs font-medium text-muted mb-3">
+              <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Personalized service • Flexible fares
+            </p>
+            <h1 class="text-4xl sm:text-5xl font-serif font-semibold leading-tight mb-6">
+              Travel with elegance — effortless booking, exceptional service
+            </h1>
+            <p class="text-muted text-lg mb-8">
+              Premium booking experience for travelers who value clarity, comfort, and refined details. Fast search,
+              transparent pricing, and white‑glove support.
+            </p>
+
+            <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <a href="#book"
+                class="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-navy to-sky-600 text-white font-semibold shadow-lg hover:scale-105 transition-transform">
+                Book a flight
+              </a>
+              <a href="#deals"
+                class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 bg-white text-black hover:scale-105 transition-transform">
+                Explore deals
+              </a>
+            </div>
+
+            <!-- Stats badges -->
+            <div class="mt-10 flex flex-wrap gap-6 justify-center lg:justify-start">
+              <div class="text-center bg-white/60 glass rounded-xl p-4 shadow-md w-24">
+                <div class="text-2xl font-bold">35k+</div>
+                <div class="text-xs text-muted text-white uppercase">Routes</div>
+              </div>
+              <div class="text-center bg-white/60 glass rounded-xl p-4 shadow-md w-24">
+                <div class="text-2xl font-bold">95%</div>
+                <div class="text-xs text-muted text-white uppercase">On-time</div>
+              </div>
+              <div class="text-center bg-white/60 glass rounded-xl p-4 shadow-md w-24">
+                <div class="text-2xl font-bold">4.8★</div>
+                <div class="text-xs text-muted  text-white uppercase">Rating</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Image Column -->
+          <div class="relative mt-12 lg:mt-0 lg:col-span-6 flex justify-center lg:justify-end">
+            <div class="rounded-3xl overflow-hidden shadow-2xl float-slow w-full max-w-lg">
+              <img
+                src="https://img.freepik.com/premium-photo/online-flight-booking-website-provide-modish-reservation-system_31965-622297.jpg?semt=ais_hybrid&w=740&q=80"
+                alt="luxury cabin and skyline" class="w-full h-[420px] object-cover">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Background overlay gradient -->
+      <div class="absolute inset-0 bg-gradient-to-r from-brand-navy/20 via-transparent to-sky-700/20 -z-10"></div>
+    </section>
+
+    <!-- Deals Section -->
+    <section id="deals" class="reveal py-16">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-3xl font-semibold">Trending deals</h2>
+        <a href="#" class="text-sm text-muted hover:underline">View all</a>
+      </div>
+
+      <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Deal Cards -->
+        <article
+          class="rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white/70 shadow-lg hover:scale-105 transition-transform">
+          <img class="w-full h-48 object-cover" src="images/new york.png" alt="New York" />
+          <div class="p-4">
+            <h3 class="font-semibold text-lg text-black">Delhi → New York</h3>
+            <p class="text-black text-sm mt-1">from ₹54,990 • Premium economy deals</p>
+          </div>
+        </article>
+
+        <article
+          class="rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white/70 shadow-lg hover:scale-105 transition-transform">
+          <img class="w-full h-48 object-cover" src="images/london.png" alt="London" />
+          <div class="p-4">
+            <h3 class="font-semibold text-lg text-black">Bengaluru → London</h3>
+            <p class="text-black text-sm mt-1">from ₹44,250 • Hand-picked fares</p>
+          </div>
+        </article>
+
+        <article
+          class="rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white/70 shadow-lg hover:scale-105 transition-transform">
+          <img class="w-full h-48 object-cover" src="images/toyko.png" alt="Tokyo" />
+          <div class="p-4">
+            <h3 class="font-semibold text-lg text-black">Mumbai → Tokyo</h3>
+            <p class="text-black text-sm mt-1">from ₹49,900 • Flexible tickets</p>
+          </div>
+        </article>
+
+        <article
+          class="rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white/70 shadow-lg hover:scale-105 transition-transform">
+          <img class="w-full h-48 object-cover" src="images/paris.png" alt="Paris" />
+          <div class="p-4">
+            <h3 class="font-semibold text-lg text-black">Hyderabad → Paris</h3>
+            <p class="text-black text-sm mt-1">from ₹46,350 • Popular this month</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+    <!-- Benefits & FAQ -->
+    <section id="benefits" class="py-12 grid lg:grid-cols-2 gap-10 reveal">
+      <div>
+        <h2 class="text-3xl font-semibold">Why travelers trust us</h2>
+        <p class="text-muted mt-2 max-w-lg">A blend of human support and modern tools — transparent pricing, flexible
+          change policies, and a concierge-style approach to help you travel confidently.</p>
+        <ul class="mt-6 space-y-4">
+          <li class="flex gap-3 items-start">
+            <div class="text-brand-gold mt-1">✓</div>
+            <div><strong>White-glove support</strong> — dedicated agents available 24/7 for changes.</div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <div class="text-brand-gold mt-1">✓</div>
+            <div><strong>Premium options</strong> — curated seat and baggage bundles for a relaxed journey.</div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <div class="text-brand-gold mt-1">✓</div>
+            <div><strong>Polished experience</strong> — clear rules, no surprise fees.</div>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section id="united-faq" class="py-16 bg-slate-50 dark:bg-slate-800/40 reveal rounded-3xl px-6">
+      <div class="max-w-4xl mx-auto text-center mb-10">
+        <h2 class="text-3xl font-semibold mb-2">United Airlines Help Center</h2>
+        <p class="text-muted">Straightforward guides for booking, refunds, travel requirements, and more.</p>
+      </div>
+      <div class="space-y-4 text-sm text-muted max-w-3xl mx-auto"> <!-- Booking -->
+        <details class="p-4 border border-slate-200 rounded-xl bg-white/70">
+          <summary class="font-semibold text-brand-navy">How to Book a Ticket</summary>
+          <ul class="mt-2 list-disc list-inside space-y-1">
+            <li>Click on <Strong>Book Ticket</Strong> (in the top-right corner or on the main banner) to access our
+              booking portal..</li>
+            <li>Enter <strong>From, To, dates</strong>, and number of travelers → press Search.</li>
+            <li>Pick your flight and fare → tap Continue.</li>
+            <li>Add seats & baggage if needed; review the total price.</li>
+            <li>Enter passenger details exactly as per passport/ID.</li>
+            <li>Complete payment securely. You’ll receive an email with your confirmation code (PNR).</li>
+          </ul>
+          <p class="mt-2 text-xs text-muted">Tip: Names must match government ID. Prices can change until payment is
+            finished.</p>
+        </details> <!-- Refund & cancellation -->
+        <details class="p-4 border border-slate-200 rounded-xl bg-white/70">
+          <summary class="font-semibold text-brand-navy">Refund & cancellation policy</summary>
+          <ul class="mt-2 list-disc list-inside space-y-1">
+            <li><strong>24-hour grace:</strong> Many bookings can be cancelled within 24 hours for a full refund if made
+              2+ days before departure.</li>
+            <li><strong>Refundable fares:</strong> Fully refundable to the original payment method.</li>
+            <li><strong>Non-refundable fares:</strong> Receive a travel credit minus any fees; credits can be used on
+              future trips.</li>
+            <li><strong>Schedule change:</strong> If the airline changes/cancels your flight, you may be rebooked or
+              refunded per airline rules.</li>
+            <li><strong>No-show:</strong> Missing the flight may void the ticket; contact support ASAP for options.</li>
+          </ul>
+          <p class="mt-2 text-xs text-muted">Always check your fare rules on the payment page—those terms control.</p>
+        </details> <!-- Travel Requirements -->
+        <details class="p-4 border border-slate-200 rounded-xl bg-white/70">
+          <summary class="font-semibold text-brand-navy">Travel requirements</summary>
+          <ul class="mt-2 list-disc list-inside space-y-1">
+            <li><strong>Documents:</strong> Valid passport for international travel; government ID for domestic.
+              Visas/e-visas may be required based on nationality and destination.</li>
+            <li><strong>Health:</strong> Some countries require vaccinations or forms. Check official sources before you
+              fly.</li>
+            <li><strong>Baggage:</strong> Standard carry-on + personal item; checked bag rules depend on route and fare.
+            </li>
+          </ul>
+        </details> <!-- Online Check-in -->
+        <details class="p-4 border border-slate-200 rounded-xl bg-white/70">
+          <summary class="font-semibold text-brand-navy">Online check-in</summary>
+          <p class="mt-2">Opens 24 hours before departure. Use your confirmation code and last name to get your mobile
+            boarding pass. Arrive at the airport early if you need to drop bags or verify documents.</p>
+        </details> <!-- Change Booking -->
+        <details class="p-4 border border-slate-200 rounded-xl bg-white/70">
+          <summary class="font-semibold text-brand-navy">Change Your booking</summary>
+          <p class="mt-2">Most tickets can be changed by paying any fare difference. Some discounted fares may have
+            change fees or restrictions. Always check your fare rules before modifying.</p>
+        </details> <!-- Baggage -->
+        <details class="p-4 border border-slate-200 rounded-xl bg-white/70">
+          <summary class="font-semibold text-brand-navy">Baggage Guidelines</summary>
+          <ul class="mt-2 list-disc list-inside space-y-1">
+            <li><strong>Carry-on:</strong> 1 standard bag + 1 personal item (size/weight limits apply).</li>
+            <li><strong>Checked bags:</strong> Fees and allowances vary by route, cabin, and status.</li>
+            <li><strong>Special items:</strong> Strollers, sports gear, instruments may have additional rules—contact
+              support.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-12 reveal">
+      <div class="grid lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+          <h2 class="text-2xl font-semibold">Need help with your trip?</h2>
+          <p class="text-muted mt-2">Email <a href="mailto:support@americanairlines.example"
+              class="text-brand-navy">support@americanairlines.example</a> or use the chat. We prioritize premium
+            support requests.</p>
+          <div class="mt-6 grid sm:grid-cols-3 gap-3"> <a
+              class="px-4 py-3 rounded-lg bg-gradient-to-r from-brand-navy to-sky-600 text-white text-center">Manage /
+              Cancel</a> <a class="px-4 py-3 rounded-lg border border-slate-300 text-center">Refunds & Policies</a> <a
+              class="px-4 py-3 rounded-lg bg-white/90 text-brand-navy text-center">Check-in Help</a> </div>
+        </div>
+        <aside class="rounded-2xl border border-slate-200 p-6 bg-white text-black ">
+          <h3 class="font-bold ">Quick links</h3>
+          <ul class="mt-3 text-sm text-black space-y-2">
+            <li><a class="hover:underline" href="#book">Book ticket</a></li>
+            <li><a class="hover:underline" href="#deals">See offers</a></li>
+            <li><a class="hover:underline" href="#faqs">Travel requirements</a></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+    <footer class="py-12 text-center text-sm text-muted">
+      <div>© <span id="year"></span> United Airlines — Premium demo. Not affiliated with United Airlines.</div>
+    </footer>
+  </main>
+
+
+  <!-- Chat FAB + Panel (refined) --> <button id="chatToggle" aria-label="Open chat"
+    class="fixed bottom-6 right-6 z-50 rounded-full p-4 bg-gradient-to-r from-brand-navy to-sky-600 text-white shadow-2xl">💬</button>
+  <div id="chatPanel"
+    class="fixed bottom-24 right-6 w-[min(92vw,420px)] max-h-[72vh] hidden z-50 rounded-2xl overflow-hidden shadow-2xl">
+    <div id="chatPanel"
+      class="fixed bottom-24 right-6 w-[min(92vw,380px)] max-h-[70vh] z-40 chatbot-shadow rounded-2xl overflow-hidden">
+      <div class="glass border border-slate-200/50 dark:border-slate-800/60">
+        <header class="px-4 py-3 flex items-center justify-between">
+          <div class="font-semibold">United Airlines</div>
+          <button id="chatClose" class="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+            aria-label="Close chat">✕</button>
+        </header>
+        <div id="chatLog" class="px-4 py-3 space-y-3 overflow-y-auto" style="max-height: 52vh">
+          <div class="text-sm text-slate-500">Hi! Ask me about <span class="font-medium">booking, refunds, check-in,
+              baggage, or travel requirements</span>.</div>
+        </div>
+        <form id="chatForm" class="p-3 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center gap-2"
+          onsubmit="chatReply(event)">
+          <input id="chatInput"
+            class="flex-1 px-3 py-2 rounded-xl border border-slate-300/70 dark:border-slate-700 bg-white/80 dark:bg-slate-800/70 focus:outline-none"
+            placeholder="Type your question…">
+          <button
+            class="px-3 py-2 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-semibold">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <script> // small helpers document.getElementById('year').textContent = new Date().getFullYear(); const mBtn = document.getElementById('mobileToggle'); const mMenu = document.getElementById('mobileMenu'); if(mBtn) mBtn.addEventListener('click', ()=> mMenu.classList.toggle('hidden')); // reveal on scroll const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } }) }, { threshold:0.12 }); document.querySelectorAll('.reveal').forEach(el=> io.observe(el)); // Chat const chatToggle = document.getElementById('chatToggle'); const chatPanel = document.getElementById('chatPanel'); const chatClose = document.getElementById('chatClose'); const chatLog = document.getElementById('chatLog'); function addBubble(text, me){ const wrap = document.createElement('div'); wrap.className = (me? 'flex justify-end':'flex justify-start'); const bubble = document.createElement('div'); bubble.className = 'max-w-[80%] px-4 py-2 rounded-2xl ' + (me? 'bg-brand-navy text-white':'bg-white dark:bg-slate-800'); bubble.textContent = text; wrap.appendChild(bubble); chatLog.appendChild(wrap); chatLog.scrollTop = chatLog.scrollHeight; } function answerFor(text){ const s = text.toLowerCase(); if(s.includes('book')) return 'To book: choose route & dates → select fare → add extras → pay securely. We email your confirmation (PNR).'; if(s.includes('refund')||s.includes('cancel')) return 'Refunds: refundable fares return to original payment; non-refundable may get travel credit. Contact support for special cases.'; if(s.includes('visa')||s.includes('documents')) return 'Carry a valid passport for international travel. Check visa & health requirements for your destination.'; if(s.includes('bag')||s.includes('luggage')) return 'Baggage: 1 carry-on + 1 personal item by default. Checked baggage fees vary by route & fare.'; if(s.includes('help')||s.includes('support')) return 'Reach support at support@americanairlines.example or use the Manage link for changes.'; return 'I can help with booking, baggage, check-in, and refunds. Try: "What documents do I need to travel to the US?"'; } function chatReply(e){ e.preventDefault(); const input = document.getElementById('chatInput'); const text = input.value.trim(); if(!text) return; addBubble(text,true); setTimeout(()=> addBubble(answerFor(text),false), 300); input.value = ''; } chatToggle.addEventListener('click', ()=>{ chatPanel.classList.toggle('hidden'); if(!chatPanel.classList.contains('hidden')) document.getElementById('chatInput').focus(); }); chatClose.addEventListener('click', ()=> chatPanel.classList.add('hidden')); </script>
+
+
+
+  <!-- Scripts -->
+  <script>
+    // Mobile menu toggle
+    const mBtn = document.getElementById('menuBtn');
+    const mMenu = document.getElementById('mobileMenu');
+    if (mBtn) mBtn.addEventListener('click', () => mMenu.classList.toggle('hidden'));
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); } })
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Year
+    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+
+    // Chatbot logic (keyword-based demo)
+    const chatToggle = document.getElementById('chatToggle');
+    const chatPanel = document.getElementById('chatPanel');
+    const chatClose = document.getElementById('chatClose');
+    const chatLog = document.getElementById('chatLog');
+
+    function addBubble(text, me = false) {
+      const wrap = document.createElement('div');
+      wrap.className = 'flex ' + (me ? 'justify-end' : 'justify-start');
+      const bubble = document.createElement('div');
+      bubble.className = 'max-w-[80%] px-3 py-2 rounded-2xl ' + (me ? 'bg-sky-600 text-white rounded-br-md' : 'bg-slate-100 dark:bg-slate-800');
+      bubble.textContent = text;
+      wrap.appendChild(bubble);
+      chatLog.appendChild(wrap);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function answerFor(text) {
+      const s = text.toLowerCase();
+      if (s.includes('book')) {
+        return 'To book: click Book Ticket → enter route & dates → choose a fare → add extras → pay → get your PNR by email.';
+      }
+      if (s.includes('refund') || s.includes('cancel')) {
+        return 'Refunds: refundable fares go back to original payment; non-refundable usually get a travel credit (fees may apply). Many bookings allow 24-hour free cancellation.';
+      }
+      if (s.includes('require') || s.includes('visa') || s.includes('document')) {
+        return 'Travel requirements: carry a valid passport/ID; check visa & health rules for your destination before you fly.';
+      }
+      if (s.includes('check') || s.includes('boarding pass')) {
+        return 'Check-in opens 24 hours before departure; use your confirmation code and last name to get a mobile boarding pass.';
+      }
+      if (s.includes('bag') || s.includes('luggage')) {
+        return 'Baggage: 1 carry-on + 1 personal item (size/weight limits apply). Checked bag fees vary by route and fare.';
+      }
+      if (s.includes('contact') || s.includes('help') || s.includes('support')) {
+        return 'Support: chat here or email support@Unitedairlines.example. For changes/cancellations use the Manage link in the Contact section.';
+      }
+      return 'I can help with booking, refunds, check-in, baggage, and travel requirements. Try asking “What documents do I need for international travel?”';
+    }
+
+    function chatReply(e) {
+      e.preventDefault();
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim(); if (!text) return;
+      addBubble(text, true);
+      setTimeout(() => addBubble(answerFor(text)), 250);
+      input.value = '';
+    }
+
+    chatToggle.addEventListener('click', () => {
+      chatPanel.classList.toggle('hidden');
+      if (!chatPanel.classList.contains('hidden')) { document.getElementById('chatInput').focus(); }
+    });
+    chatClose.addEventListener('click', () => chatPanel.classList.add('hidden'));
+  </script>
+
+</body>
+
+</html>
